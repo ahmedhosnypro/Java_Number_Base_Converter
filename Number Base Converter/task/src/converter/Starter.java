@@ -9,6 +9,8 @@ public class Starter {
         ConvertFactory convertFactory = new ConvertFactory();
         BaseConverter converter = convertFactory.createConverter(10);
         String out = converter.convert(input[0], input[1]);
+
+        System.out.print("Conversion result: ");
         System.out.println(out);
     }
 }
@@ -31,13 +33,14 @@ class standardInputParser extends InputParser{
     @Override
     int[] parse() {
         int[] out = new int[2];
-
+        System.out.print("Enter number in decimal system: ");
         while (true) {
             try{
                 out[0] = Integer.parseInt(scanner.next().trim());
                 break;
             }catch(NumberFormatException ignored){}
         }
+        System.out.print("Enter target base: ");
         while (true) {
             try{
                 out[1] = Integer.parseInt(scanner.next().trim());
