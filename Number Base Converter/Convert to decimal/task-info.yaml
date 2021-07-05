@@ -420,6 +420,184 @@ files:
         }
     }
   learner_created: false
+- name: src/converter/Starter.java
+  visible: true
+  text: |-
+    package converter;
+
+    import java.util.Scanner;
+
+    public class Starter {
+        public static  void start() {
+            InputParser parser = new standardInputParser();
+            int[] input = parser.parse();
+            ConvertFactory convertFactory = new ConvertFactory();
+            BaseConverter converter = convertFactory.createConverter(10);
+            String out = converter.convert(input[0], input[1]);
+
+            System.out.print("Conversion result: ");
+            System.out.println(out);
+        }
+    }
+
+
+
+
+    abstract class InputParser {
+        static Scanner scanner;
+        static {
+            scanner = new Scanner(System.in);
+        }
+
+        abstract int[] parse();
+
+    }
+
+    class standardInputParser extends InputParser{
+
+        @Override
+        int[] parse() {
+            int[] out = new int[2];
+            System.out.print("Enter number in decimal system: ");
+            while (true) {
+                try{
+                    out[0] = Integer.parseInt(scanner.next().trim());
+                    break;
+                }catch(NumberFormatException ignored){}
+            }
+            System.out.print("Enter target base: ");
+            while (true) {
+                try{
+                    out[1] = Integer.parseInt(scanner.next().trim());
+                    break;
+                }catch(NumberFormatException ignored){}
+            }
+
+            return out;
+        }
+    }
+  learner_created: true
+- name: src/converter/BaseConverter.java
+  visible: true
+  text: |
+    package converter;
+
+    import java.util.LinkedList;
+    import java.util.Map;
+
+    abstract public class BaseConverter {
+        abstract String convert(int input, int targetBase);
+
+        abstract String toBinary(int input);
+
+        abstract String toOctal(int input);
+
+        abstract String toDecimal(int input);
+
+        abstract String toHex(int input);
+    }
+
+    class ConvertFactory {
+        public BaseConverter createConverter(String inputBase) {
+            inputBase = inputBase.toLowerCase();
+            switch (inputBase) {
+                case "decimal":
+                    return new DecimalConverter();
+                default:
+                    return null;
+            }
+        }
+
+        public BaseConverter createConverter(int inputtBase) {
+            switch (inputtBase) {
+                case 10:
+                    return new DecimalConverter();
+                default:
+                    return null;
+            }
+        }
+
+    }
+
+    class DecimalConverter extends BaseConverter {
+        @Override
+        String convert(int input, int targetBase) {
+            switch (targetBase) {
+                case 2:
+                    return toBinary(input);
+                case 8:
+                    return toOctal(input);
+                case 16:
+                    return toHex(input);
+                default:
+                    return String.valueOf(input);
+            }
+        }
+
+        private String normalConvert(int input, int targetBase) {
+            StringBuilder out = new StringBuilder();
+            LinkedList<Integer> list = new LinkedList<>();
+            int Quotient = input;
+            int Remainder;
+            while (Quotient > 0) {
+                Remainder = Quotient % targetBase;
+                Quotient /= targetBase;
+                list.addFirst(Remainder);
+            }
+            for (var N : list) {
+                out.append(N);
+            }
+            return out.toString();
+        }
+
+        @Override
+        String toBinary(int input) {
+            return normalConvert(input, 2);
+        }
+
+        @Override
+        String toOctal(int input) {
+            return normalConvert(input, 8);
+        }
+
+        @Override
+        String toDecimal(int input) {
+            return String.valueOf(input);
+        }
+
+        @Override
+        String toHex(int input) {
+            StringBuilder out = new StringBuilder();
+            LinkedList<String> list = new LinkedList<>();
+            int Quotient = input;
+            int Remainder;
+            Map<Integer, String> map = Map.of(10, "A", 11, "B", 12, "C",
+                    13, "D", 14, "E", 15, "F");
+            while (Quotient > 0) {
+                Remainder = Quotient % 16;
+                Quotient /= 16;
+                String v = map.getOrDefault(Remainder, String.valueOf(Remainder));
+                list.addFirst(v);
+            }
+            for (var N : list) {
+                out.append(N);
+            }
+            return out.toString();
+        }
+    }
+  learner_created: true
+- name: src/converter/Command.java
+  visible: true
+  learner_created: true
+- name: src/converter/NumberInputParser.java
+  visible: true
+  learner_created: true
+- name: src/converter/CommandSelector.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/181/stages/914/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 05 Jul 2021 12:40:32 UTC
 record: -1

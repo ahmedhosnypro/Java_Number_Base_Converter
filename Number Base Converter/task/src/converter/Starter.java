@@ -2,52 +2,51 @@ package converter;
 
 import java.util.Scanner;
 
+import static converter.Command.*;
+import static converter.CommandSelector.selectCommand;
+
 public class Starter {
-    public static  void start() {
-        InputParser parser = new standardInputParser();
-        int[] input = parser.parse();
-        ConvertFactory convertFactory = new ConvertFactory();
-        BaseConverter converter = convertFactory.createConverter(10);
-        String out = converter.convert(input[0], input[1]);
-
-        System.out.print("Conversion result: ");
-        System.out.println(out);
-    }
-}
-
-
-
-
-abstract class InputParser {
     static Scanner scanner;
+
     static {
         scanner = new Scanner(System.in);
     }
 
-    abstract int[] parse();
+    public static boolean start() {
+        boolean isNotFinished = true;
+        Command command = selectCommand();
 
-}
+        ParserFactory parserFactory = new ParserFactory();
+        NumberInputParser numberInputParser;
 
-class standardInputParser extends InputParser{
+        ConvertFactory convertFactory = new ConvertFactory();
+        BaseConverter decimalConverter =convertFactory.createConverter();
 
-    @Override
-    int[] parse() {
-        int[] out = new int[2];
-        System.out.print("Enter number in decimal system: ");
-        while (true) {
-            try{
-                out[0] = Integer.parseInt(scanner.next().trim());
+        String[] numbs;
+        StringBuilder out = new StringBuilder();
+
+        switch (command) {
+            case FROM:
+                numberInputParser = parserFactory.createParser(FROM);
+                numbs = numberInputParser.parseNumber();
+                out.append("Conversion result: ");
+                out.append(decimalConverter.fromBaseConvert(numbs[0], numbs[1]));
+                System.out.println(out);
                 break;
-            }catch(NumberFormatException ignored){}
-        }
-        System.out.print("Enter target base: ");
-        while (true) {
-            try{
-                out[1] = Integer.parseInt(scanner.next().trim());
+            case TO:
+                numberInputParser = parserFactory.createParser(TO);
+                numbs = numberInputParser.parseStringNumber();
+                out.append("Conversion to decimal result: ");
+                out.append(decimalConverter.toBaseConverter(numbs[0], numbs[1]));
+                System.out.println(out);
                 break;
-            }catch(NumberFormatException ignored){}
+            case EXIT:
+                isNotFinished = false;
+                break;
+            default:
+                break;
         }
-
-        return out;
+        return isNotFinished;
     }
 }
+
