@@ -13,11 +13,20 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Number Base Converter/task" />
+            <option value="$PROJECT_DIR$/Topics/BigDecimal/Average" />
+            <option value="$PROJECT_DIR$/Topics/BigDecimal/Deposit" />
+            <option value="$PROJECT_DIR$/Topics/BigDecimal/Multiplication" />
+            <option value="$PROJECT_DIR$/Topics/BigDecimal/Theory" />
             <option value="$PROJECT_DIR$/Topics/Branching statements/Bus tour" />
             <option value="$PROJECT_DIR$/Topics/Branching statements/Even or odd" />
             <option value="$PROJECT_DIR$/Topics/Branching statements/The (un)-ordered sequence" />
             <option value="$PROJECT_DIR$/Topics/Branching statements/The sequence" />
             <option value="$PROJECT_DIR$/Topics/Branching statements/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Relational operators/Check the given numbers are different" />
+            <option value="$PROJECT_DIR$/Topics/Relational operators/Check the value" />
+            <option value="$PROJECT_DIR$/Topics/Relational operators/Check the value (1)" />
+            <option value="$PROJECT_DIR$/Topics/Relational operators/Is between" />
+            <option value="$PROJECT_DIR$/Topics/Relational operators/Theory" />
             <option value="$PROJECT_DIR$/Topics/The while and do-while loops/Profit" />
             <option value="$PROJECT_DIR$/Topics/The while and do-while loops/Squares of natural numbers" />
             <option value="$PROJECT_DIR$/Topics/The while and do-while loops/The length of the sequence" />

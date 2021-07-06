@@ -1024,6 +1024,149 @@ files:
         }
     }
   learner_created: false
+- name: src/converter/BaseConverter.java
+  visible: true
+  text: |-
+    package converter;
+
+    import java.math.BigInteger;
+    import java.util.LinkedList;
+
+    public class BaseConverter {
+        public static String convert(String strNum, int sourceBase, int targetBase) {
+            BigInteger decimal = DecimalConverter.toDecimalConverter(strNum, sourceBase);
+            return DecimalConverter.fromDecimalConvert(decimal, targetBase);
+        }
+    }
+
+
+    class DecimalConverter {
+        static BigInteger toDecimalConverter(String strNum, int sourceBase) {
+            BigInteger result = BigInteger.ZERO;
+
+
+            int digit = 0;
+            int power = 0;
+            BigInteger base = BigInteger.valueOf(sourceBase);
+            BigInteger tmpResult;
+
+            for (int i = strNum.length() - 1; i >= 0; i--) {
+                char ch = strNum.charAt(i);
+                if (ch >= 48 && ch <= 57) {
+                    digit = ch - 48;
+                } else if (ch >= 65 && ch <= 90) {
+                    digit = ch - 55;
+                } else if (ch >= 97 && ch <= 122) {
+                    digit = ch - 87;
+                }
+    //            tmpResult = (int) (digit * Math.pow(sourceBase, power));
+                tmpResult = BigInteger.valueOf(digit).multiply(base.pow(power));
+                result = result.add(tmpResult);
+                power++;
+            }
+
+            return result;
+        }
+
+        static String fromDecimalConvert(BigInteger decimalNumber, int targetBase) {
+            BigInteger Quotient = decimalNumber;
+
+            int Remainder;
+            LinkedList<String> list = new LinkedList<>();
+
+            while (!Quotient.equals(BigInteger.ZERO)) {
+                Remainder = Integer.parseInt(Quotient.remainder(BigInteger.valueOf(targetBase)).toString());
+                Quotient = Quotient.divide(BigInteger.valueOf(targetBase));
+
+                if (Remainder <= 9) {
+                    list.addFirst(String.valueOf(Remainder));
+                } else {
+                    char ch = (char) (Remainder + 55);
+                    list.addFirst(String.valueOf(ch));
+                }
+            }
+
+            StringBuilder out = new StringBuilder();
+            for (var N : list) {
+                out.append(N);
+            }
+            return out.toString();
+        }
+    }
+  learner_created: true
+- name: src/converter/Menu.java
+  visible: true
+  text: |
+    package converter;
+
+    import java.util.Scanner;
+
+    public class Menu {
+        static Scanner scanner;
+
+        static {
+            scanner = new Scanner(System.in);
+        }
+
+        public static void fstLvlMenu() {
+            System.out.print("Enter two numbers in format:" +
+                    " {source base} {target base} (To quit type /exit) ");
+
+            String input = scanner.nextLine().trim();
+
+            if (!input.equals("/exit")){
+                String[] bases = input.split(" ");
+                if (bases.length == 2) {
+                    int sourceBase;
+                    int targetBase;
+                    while (true) {
+                        try {
+                            sourceBase = Integer.parseInt(bases[0]);
+                            targetBase = Integer.parseInt(bases[1]);
+                            sndLvlMenu(sourceBase, targetBase);
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid Base, try again");
+                            fstLvlMenu();
+                        }
+                    }
+                }else {
+                    System.out.println("Invalid Base, try again");
+                    fstLvlMenu();
+                }
+            }
+        }
+
+        public static void sndLvlMenu(int sourceBase, int targetBase) {
+            System.out.print("Enter number in base " + sourceBase + " to convert" +
+                    " to base " + targetBase + " (To go back type /back) ");
+
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            if (input.equals("/BACK")) {
+                fstLvlMenu();
+            } else {
+                while (true) {
+                    if (input.matches(".*\\d\\w.*|.*\\w.*")) {
+                        String out = BaseConverter.convert(input, sourceBase, targetBase);
+
+                        System.out.println("Conversion result: " + out);
+                        System.out.println();
+                        sndLvlMenu(sourceBase, targetBase);
+                        break;
+                    } else {
+                        System.out.println("Invalid Number, try again");
+                        sndLvlMenu(sourceBase, targetBase);
+                    }
+                }
+            }
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/181/stages/916/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Tue, 06 Jul 2021 15:57:38 UTC
 record: -1
