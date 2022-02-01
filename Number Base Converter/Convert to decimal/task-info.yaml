@@ -101,7 +101,12 @@ files:
             lines = output.trim().split("\n");
             lastLine = lines[lines.length - 1];
 
-            userResult = lines[0].substring(output.indexOf(":") + 1).trim();
+            try {
+                userResult = lines[0].substring(output.indexOf(":") + 1).trim();
+            } catch (Exception ignored) {
+                return CheckResult.wrong("Looks like your output is wrong! Make sure you print the result as in examples!");
+            }
+
             if (!userResult.equalsIgnoreCase(actualResult)) {
                 return CheckResult.wrong("The conversion result of your program is wrong");
             }
@@ -428,7 +433,7 @@ files:
     import java.util.Scanner;
 
     public class Starter {
-        public static  void start() {
+        public static void start() {
             InputParser parser = new standardInputParser();
             int[] input = parser.parse();
             ConvertFactory convertFactory = new ConvertFactory();
@@ -441,10 +446,9 @@ files:
     }
 
 
-
-
     abstract class InputParser {
         static Scanner scanner;
+
         static {
             scanner = new Scanner(System.in);
         }
@@ -453,24 +457,26 @@ files:
 
     }
 
-    class standardInputParser extends InputParser{
+    class standardInputParser extends InputParser {
 
         @Override
         int[] parse() {
             int[] out = new int[2];
             System.out.print("Enter number in decimal system: ");
             while (true) {
-                try{
+                try {
                     out[0] = Integer.parseInt(scanner.next().trim());
                     break;
-                }catch(NumberFormatException ignored){}
+                } catch (NumberFormatException ignored) {
+                }
             }
             System.out.print("Enter target base: ");
             while (true) {
-                try{
+                try {
                     out[1] = Integer.parseInt(scanner.next().trim());
                     break;
-                }catch(NumberFormatException ignored){}
+                } catch (NumberFormatException ignored) {
+                }
             }
 
             return out;
@@ -479,7 +485,7 @@ files:
   learner_created: true
 - name: src/converter/BaseConverter.java
   visible: true
-  text: |
+  text: |-
     package converter;
 
     import java.util.LinkedList;
@@ -599,5 +605,5 @@ feedback_link: https://hyperskill.org/projects/181/stages/914/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
-  time: Mon, 05 Jul 2021 12:40:32 UTC
+  time: Tue, 01 Feb 2022 14:07:54 UTC
 record: 2

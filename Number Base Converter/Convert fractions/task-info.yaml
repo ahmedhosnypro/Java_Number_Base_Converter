@@ -1096,7 +1096,7 @@ files:
   learner_created: true
 - name: src/converter/Menu.java
   visible: true
-  text: |
+  text: |-
     package converter;
 
     import java.util.Scanner;
@@ -1114,7 +1114,7 @@ files:
 
             String input = scanner.nextLine().trim();
 
-            if (!input.equals("/exit")){
+            if (!input.equals("/exit")) {
                 String[] bases = input.split(" ");
                 if (bases.length == 2) {
                     int sourceBase;
@@ -1130,7 +1130,7 @@ files:
                             fstLvlMenu();
                         }
                     }
-                }else {
+                } else {
                     System.out.println("Invalid Base, try again");
                     fstLvlMenu();
                 }
@@ -1168,5 +1168,5 @@ status: Solved
 feedback:
   message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
     Academy</a> to continue learning.
-  time: Tue, 06 Jul 2021 15:57:38 UTC
+  time: Tue, 01 Feb 2022 14:19:36 UTC
 record: -1

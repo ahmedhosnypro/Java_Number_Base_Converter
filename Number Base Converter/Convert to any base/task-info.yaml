@@ -1,17 +1,5 @@
 type: edu
 files:
-- name: src/converter/Main.java
-  visible: true
-  text: |
-    package converter;
-
-    public class Main {
-
-        public static void main(String[] args) {
-            // write your code here
-        }
-    }
-  learner_created: false
 - name: test/NumeralSystemConverterTest.java
   visible: false
   text: |
@@ -529,6 +517,18 @@ files:
         }
     }
   learner_created: false
+- name: src/converter/Main.java
+  visible: true
+  text: |
+    package converter;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            // write your code here
+        }
+    }
+  learner_created: false
 - name: src/converter/BaseConverter.java
   visible: true
   text: |-
@@ -590,7 +590,7 @@ files:
 
     }
 
-    class DecimalConverter extends BaseConverter{
+    class DecimalConverter extends BaseConverter {
 
         @Override
         String fromBaseConvert(String decimalNumber, String targetBase) {
@@ -621,7 +621,7 @@ files:
         String toBaseConverter(String sourceNumber, String sourceBase) {
             int base = Integer.parseInt(sourceBase);
 
-            int result =0;
+            int result = 0;
             if (base == 2 || base == 8) {
 
                 int digit = Integer.parseInt(sourceNumber);
@@ -639,7 +639,7 @@ files:
                 int power = 0;
                 int tmpResult;
 
-                for (int i = sourceNumber.length()-1; i >= 0; i--) {
+                for (int i = sourceNumber.length() - 1; i >= 0; i--) {
                     char ch = sourceNumber.charAt(i);
                     digit = reversedHexMap.getOrDefault(String.valueOf(ch), (ch - 48));
                     tmpResult = (int) (digit * Math.pow(base, power));
@@ -659,5 +659,5 @@ feedback_link: https://hyperskill.org/projects/181/stages/915/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
-  time: Tue, 06 Jul 2021 00:24:06 UTC
+  time: Tue, 01 Feb 2022 14:17:44 UTC
 record: 3
